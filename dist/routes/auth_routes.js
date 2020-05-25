@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const varify_token_1 = require("../lib/varify_token");
 const auth_controller_1 = require("../controllers/auth_controller");
 // const router: Router = Router();
 class AuthRoutes {
@@ -11,7 +12,7 @@ class AuthRoutes {
     routes() {
         this.router.post('/signup', auth_controller_1.signUp);
         this.router.post('/signin', auth_controller_1.signIn);
-        this.router.get('/profile', auth_controller_1.profile);
+        this.router.get('/profile', varify_token_1.verifyToken, auth_controller_1.profile);
     }
 }
 const authRoutes = new AuthRoutes();

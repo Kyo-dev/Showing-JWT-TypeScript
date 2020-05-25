@@ -62,6 +62,11 @@ exports.signIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.header('auth-token', token).json(user);
 });
 exports.profile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('profile');
+    const user = yield user_model_1.default.findById(req.userId, {
+        password: 0
+    });
+    if (!user)
+        return res.status(404).json('User not found');
+    res.json(user);
 });
 //# sourceMappingURL=auth_controller.js.map

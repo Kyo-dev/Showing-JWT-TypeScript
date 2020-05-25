@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import UserModel, {IUser} from '../models/user_model'
 
+
 export async function signUp(req: Request, res: Response): Promise<Response | void> {
   const {username, email, password} = req.body
   let ban:boolean = true;
@@ -41,10 +42,12 @@ export const signIn = async(req: Request, res: Response): Promise<Response | voi
   })  
   console.log(user)
   res.header('auth-token', token).json(user)
-
-
 }
 
 export const profile = async(req: Request, res: Response): Promise<Response | void> => {
-  res.send('profile')
+  const user = await UserModel.findById(req.userId, {
+    password: 0
+  });
+  if(!user) return res.status(404).json('User not found');
+  res.json(user);
 }

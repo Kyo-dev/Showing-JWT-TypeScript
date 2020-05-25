@@ -34,8 +34,8 @@ class App {
         this.app.use(express_1.default.json());
     }
     routes() {
-        const URL = '/api/auth';
-        this.app.use(`${URL}`, auth_routes_1.default);
+        const URL = '/api/';
+        this.app.use(`${URL}auth`, auth_routes_1.default);
     }
     listen() {
         return __awaiter(this, void 0, void 0, function* () {

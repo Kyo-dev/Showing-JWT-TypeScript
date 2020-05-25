@@ -27,8 +27,8 @@ export class App {
     }
     
     private routes() {
-        const URL = '/api/auth'
-        this.app.use(`${URL}`,authRoutes);
+        const URL = '/api/'
+        this.app.use(`${URL}auth`,authRoutes);
     }
 
     async listen(): Promise<void> {
