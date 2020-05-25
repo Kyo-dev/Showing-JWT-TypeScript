@@ -1,7 +1,9 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import express, { Application } from 'express'
 import morgan from 'morgan'
-import authRouter from '../routes/auth_routes'
 
+import authRoutes from '../routes/auth_routes'
 
 export class App {
     app: Application;
@@ -17,21 +19,21 @@ export class App {
 
     private settings() {
         this.app.set('port', this.port || process.env.PORT || 4000);
-        this.app.use(authRouter);
     }
-
+    
     private middlewares() {
         this.app.use(morgan('dev'));
         this.app.use(express.json());
     }
-
+    
     private routes() {
-
+        const URL = '/api/auth'
+        this.app.use(`${URL}`,authRoutes);
     }
 
     async listen(): Promise<void> {
         await this.app.listen(this.app.get('port'));
-        console.log('Server on port', this.app.get('port'));
+        console.log(`Server on port ${this.app.get('port')}`);
     }
 
 }

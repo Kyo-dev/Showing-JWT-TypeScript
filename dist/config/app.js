@@ -13,6 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const auth_routes_1 = __importDefault(require("../routes/auth_routes"));
@@ -26,18 +28,19 @@ class App {
     }
     settings() {
         this.app.set('port', this.port || process.env.PORT || 4000);
-        this.app.use(auth_routes_1.default);
     }
     middlewares() {
         this.app.use(morgan_1.default('dev'));
         this.app.use(express_1.default.json());
     }
     routes() {
+        const URL = '/api/auth';
+        this.app.use(`${URL}`, auth_routes_1.default);
     }
     listen() {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.app.listen(this.app.get('port'));
-            console.log('Server on port', this.app.get('port'));
+            console.log(`Server on port ${this.app.get('port')}`);
         });
     }
 }

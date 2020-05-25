@@ -10,7 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./config/app");
+const database_1 = require("./config/database");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield new database_1.DataBase();
     const app = new app_1.App();
     yield app.listen();
 });
